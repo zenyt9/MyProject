@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/css/rental-template.css')}}" />
-    <title>Захиалга - Premium Car Rental</title>
+    <div style="color:cyan"><title>Захиалга - Premium Car Rental </title></div>
+    <img src=" " alt="">
+
 </head>
 <body>
     <nav>
@@ -19,7 +21,6 @@
         </div>
         <ul class="nav__links" id="nav-links">
             <li><a href="/">Нүүр</a></li>
-            <li><a href="{{ route('categories.index') }}">Ангилал</a></li>
             <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
             <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
             <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>

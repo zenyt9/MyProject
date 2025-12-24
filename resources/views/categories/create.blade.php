@@ -19,7 +19,6 @@
         </div>
         <ul class="nav__links" id="nav-links">
             <li><a href="/">Нүүр</a></li>
-            <li><a href="{{ route('categories.index') }}">Ангилал</a></li>
             <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
             <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
             <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
@@ -39,11 +38,25 @@
                 @csrf
                 <div style="margin-bottom: 1.5rem;">
                     <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Ангиллын нэр</label>
-                    <input type="text" name="name" id="name"
+                    <select name="name" id="name"
                            style="width: 100%; padding: 0.75rem; border: 2px solid var(--extra-light); border-radius: 0.5rem; font-size: 1rem; transition: all 0.3s;"
-                           placeholder="Жишээ: SUV" required
+                           required
                            onfocus="this.style.borderColor='var(--primary-color)'"
-                           onblur="this.style.borderColor='var(--extra-light)'">
+                           onblur="this.style.borderColor='var(--extra-light)'"
+                           onmouseover="this.style.backgroundColor='var(--extra-light)'"
+                           onmouseout="this.style.backgroundColor='white'">
+                        <option value="">Ангилал сонгох...</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Pickup">Pickup</option>
+                        <option value="Coupe">Coupe</option>
+                        <option value="Wagon">Wagon</option>
+                        <option value="Offroad">Offroad</option>
+                        <option value="Luxury">Luxury</option>
+                        <option value="Van">Van</option>
+                        <option value="Truck">Truck</option>
+                        <option value="Sport">Sport</option>
+                    </select>
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">

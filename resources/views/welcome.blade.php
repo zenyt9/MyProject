@@ -21,8 +21,21 @@
         </div>
         <ul class="nav__links" id="nav-links">
           <li><a href="#home">Нүүр</a></li>
-          <li><a href="{{ route('categories.index') }}">Ангилал</a></li>
-          <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
+          <li class="dropdown">
+            <a href="{{ route('cars.index') }}">Машинууд</a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ route('cars.index') }}?category=Sedan">Sedan</a></li>
+              <li><a href="{{ route('cars.index') }}?category=SUV">SUV</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Pickup">Pickup</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Coupe">Coupe</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Wagon">Wagon</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Offroad">Offroad</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Luxury">Luxury</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Van">Van</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Truck">Truck</a></li>
+              <li><a href="{{ route('cars.index') }}?category=Sport">Sport</a></li>
+            </ul>
+          </li>
           <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
           <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
           <li><a href="{{ route('rentals.index') }}">Түрээс</a></li>

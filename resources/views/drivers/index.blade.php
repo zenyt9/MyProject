@@ -19,7 +19,6 @@
         </div>
         <ul class="nav__links" id="nav-links">
             <li><a href="/">Нүүр</a></li>
-            <li><a href="{{ route('categories.index') }}">Ангилал</a></li>
             <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
             <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
             <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
