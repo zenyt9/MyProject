@@ -36,7 +36,7 @@ class CarCategoryController extends Controller
         ]);
 
         CarCategory::create($validated);
-        return redirect()->route('categories.index')->with('success', 'Ангилал амжилттай нэмэгдлээ');
+        return redirect()->route('admin.categories.index')->with('success', 'Ангилал амжилттай нэмэгдлээ');
     }
 
     /**
@@ -67,7 +67,7 @@ class CarCategoryController extends Controller
         ]);
 
         $category->update($validated);
-        return redirect()->route('categories.index')->with('success', 'Ангилал амжилттай шинэчлэгдлээ');
+        return redirect()->route('admin.categories.index')->with('success', 'Ангилал амжилттай шинэчлэгдлээ');
     }
 
     /**
@@ -76,6 +76,6 @@ class CarCategoryController extends Controller
     public function destroy(CarCategory $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Ангилал амжилттай устгагдлаа');
+        return redirect()->route('admin.categories.index')->with('success', 'Ангилал амжилттай устгагдлаа');
     }
 }

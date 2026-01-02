@@ -248,6 +248,7 @@ nav {
 .range__grid {
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .range__card {
@@ -258,14 +259,20 @@ nav {
   border-radius: 1.5rem;
   overflow: hidden;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  height: 300px;
+  width: 100%;
 }
 
 .range__card img {
   transition: 0.3s;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .range__card:hover img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .range__details {
@@ -312,15 +319,25 @@ nav {
   max-width: 500px;
   margin-inline: auto;
   padding-inline: 1rem;
+  display: none;
+}
+
+.location__content {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+  padding: 3rem;
+  border-radius: 1.5rem;
+  color: white;
 }
 
 .location__content .section__header {
   margin-bottom: 2rem;
+  color: white;
 }
 
 .location__content p {
   margin-bottom: 2rem;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
 }
 
 .select__container {
@@ -878,5 +895,81 @@ footer {
 
   .dropdown-menu a:hover {
     background-color: rgba(0,0,0,0.2);
+  }
+}
+/* Brands/Partners Section */
+.brands__container {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.brands__grid {
+  margin-top: 3rem;
+  overflow: hidden;
+  padding: 1rem 0;
+  animation: slideInFromLeft 1s ease-out;
+}
+
+.brands__track {
+  display: flex;
+  width: max-content;
+  animation: brands-marquee 30s linear infinite;
+}
+
+.brands__set {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.brand__logo {
+  height: 80px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.brand__logo:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@keyframes brands-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (width > 768px) {
+  .brands__set {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .brands__set {
+    gap: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brands__track {
+    animation: none;
   }
 }

@@ -86,6 +86,6 @@ class RentalController extends Controller
         Car::find($rental->car_id)->update(['status' => 'available']);
 
         $rental->delete();
-        return redirect()->route('rentals.index')->with('success', 'Түрээс амжилттай устгагдлаа');
+        return redirect()->route('admin.rentals.index')->with('success', 'Түрээс амжилттай устгагдлаа');
     }
 }

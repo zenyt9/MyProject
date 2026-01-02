@@ -13,7 +13,10 @@
       <nav>
         <div class="nav__header">
           <div class="nav__logo">
-            <a href="#">RENTAL</a>
+            <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="ri-car-line" style="font-size: 1.8rem;"></i>
+              <span>Premium Rental</span>
+            </a>
           </div>
           <div class="nav__menu__btn" id="menu-btn">
             <i class="ri-menu-line"></i>
@@ -21,28 +24,25 @@
         </div>
         <ul class="nav__links" id="nav-links">
           <li><a href="#home">Нүүр</a></li>
-          <li class="dropdown">
-            <a href="{{ route('cars.index') }}">Машинууд</a>
-            <ul class="dropdown-menu">
-              <li><a href="{{ route('cars.index') }}?category=Sedan">Sedan</a></li>
-              <li><a href="{{ route('cars.index') }}?category=SUV">SUV</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Pickup">Pickup</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Coupe">Coupe</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Wagon">Wagon</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Offroad">Offroad</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Luxury">Luxury</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Van">Van</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Truck">Truck</a></li>
-              <li><a href="{{ route('cars.index') }}?category=Sport">Sport</a></li>
-            </ul>
-          </li>
-          <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
-          <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
-          <li><a href="{{ route('rentals.index') }}">Түрээс</a></li>
-          <li><a href="{{ route('bookings.index') }}">Захиалга</a></li>
+          <li><a href="#range">Машинууд</a></li>
+          <li><a href="#choose">Онцлог</a></li>
+          <li><a href="#download">Холбоо барих</a></li>
         </ul>
         <div class="nav__btn">
-          <button class="btn">Эхлэх</button>
+          @auth
+            @if(auth()->user()->role === 'admin')
+              <a href="{{ route('admin.dashboard') }}" class="btn"><i class="ri-dashboard-line"></i> Админ самбар</a>
+            @else
+              <a href="{{ route('user.cars.index') }}" class="btn"><i class="ri-car-line"></i> Машин түрээслэх</a>
+            @endif
+            <form action="{{ route('logout') }}" method="POST" style="display: inline; margin-left: 1rem;">
+              @csrf
+              <button type="submit" class="btn" style="background: #dc3545;"><i class="ri-logout-box-line"></i> Гарах</button>
+            </form>
+          @else
+            <a href="{{ route('login') }}" class="btn"><i class="ri-login-box-line"></i> Нэвтрэх</a>
+            <a href="{{ route('register') }}" class="btn" style="margin-left: 1rem; background: var(--primary-color-dark);"><i class="ri-user-add-line"></i> Бүртгүүлэх</a>
+          @endauth
         </div>
       </nav>
       <div class="header__container" id="home">
@@ -64,7 +64,6 @@
             <i class="ri-search-line"></i>
           </button>
         </form>
-        <img src="{{asset('assets/img/header.png')}}" alt="header" />
       </div>
       <a href="#about" class="scroll__down">
         <i class="ri-arrow-down-line"></i>
@@ -75,53 +74,37 @@
       <h2 class="section__header">ӨРГӨН СОНГОЛТ</h2>
       <div class="range__grid">
         <div class="range__card">
-          <img src="{{asset('assets/img/range-1.jpg')}}" alt="range" />
+          <img src="{{ asset('assets/img/gr86.jpg') }}" alt="sedan" />
           <div class="range__details">
-            <h4>СЕДАН</h4>
-            <a href="{{ route('cars.index') }}"><i class="ri-arrow-right-line"></i></a>
+            <h4>SPORT</h4>
+            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
         <div class="range__card">
-          <img src="{{asset('assets/img/range-2.jpg')}}" alt="range" />
+          <img src="{{ asset('assets/img/suv_jeep.jpg') }}" alt="suv" />
           <div class="range__details">
             <h4>SUV</h4>
-            <a href="{{ route('cars.index') }}"><i class="ri-arrow-right-line"></i></a>
+            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
         <div class="range__card">
-          <img src="{{asset('assets/img/range-3.jpg')}}" alt="range" />
+          <img src="{{ asset('assets/img/offroad.webp') }}" alt="offroad" />
           <div class="range__details">
-            <h4>МИНИВЭН</h4>
-            <a href="{{ route('cars.index') }}"><i class="ri-arrow-right-line"></i></a>
+            <h4>OFFROAD</h4>
+            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
         <div class="range__card">
-          <img src="{{asset('assets/img/range-4.jpg')}}" alt="range" />
+          <img src="{{ asset('assets/img/electric.jpg') }}" alt="electric" />
           <div class="range__details">
-            <h4>ЦАХИЛГААН</h4>
-            <a href="{{ route('cars.index') }}"><i class="ri-arrow-right-line"></i></a>
+            <h4>ELECTRIC</h4>
+            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section__container location__container" id="rent">
-      <div class="location__image">
-        <img src="{{asset('assets/img/location.png')}}" alt="location" />
-      </div>
-      <div class="location__content">
-        <h2 class="section__header">ТАНЫ БАЙРШИЛД МАШИН ОЛ</h2>
-        <p>
-          Хаана ч байсан таны хэрэгцээнд тохирсон төгс тээврийн хэрэгслийг олоорой.
-          Манай 'Байршилдаа машин хайх' функц нь танд ойр орчимд байгаа premium автомашинаас
-          хялбархан хайж, сонгох боломжийг олгоно. Тансаг седан, том SUV эсвэл спортлог машин
-          гэж байсан бид таны аялалд төгс тохирох автомашиныг олоход тусална.
-        </p>
-        <div class="location__btn">
-          <a href="{{ route('cars.index') }}" class="btn">Машин харах</a>
-        </div>
-      </div>
-    </section>
+
 
     <section class="select__container" id="ride">
       <h2 class="section__header">МӨРӨӨДЛИЙН МАШИНАА СОНГО</h2>
@@ -163,8 +146,12 @@
           <div><span id="select-price">{{ \App\Models\Car::first()->daily_rate ?? '0' }}</span> ₮/өдөр</div>
         </div>
         <div class="select__btns">
-          <a href="{{ route('cars.index') }}" class="btn">Дэлгэрэнгүй</a>
-          <a href="{{ route('rentals.create') }}" class="btn">Түрээслэх</a>
+          <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}" class="btn">Дэлгэрэнгүй</a>
+          @auth
+            <a href="{{ route('login') }}" class="btn">Түрээслэх</a>
+          @else
+            <a href="{{ route('login') }}" class="btn">Нэвтрэх</a>
+          @endauth
         </div>
       </form>
     </section>
@@ -229,6 +216,39 @@
       </div>
     </section>
 
+    <!-- Brands/Partners Section -->
+    <section class="section__container brands__container">
+      <h2 class="section__header">Бидний Партнерууд</h2>
+      <div class="brands__grid" aria-label="Partner logos">
+        <div class="brands__track">
+          <div class="brands__set">
+            <img src="{{ asset('assets/img/banner-1.png') }}" alt="brand-1" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-2.png') }}" alt="brand-2" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-3.png') }}" alt="brand-3" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-4.png') }}" alt="brand-4" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-5.png') }}" alt="brand-5" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-6.png') }}" alt="brand-6" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-7.png') }}" alt="brand-7" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-8.png') }}" alt="brand-8" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-9.png') }}" alt="brand-9" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-10.png') }}" alt="brand-10" class="brand__logo" />
+          </div>
+          <div class="brands__set" aria-hidden="true">
+            <img src="{{ asset('assets/img/banner-1.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-2.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-3.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-4.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-5.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-6.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-7.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-8.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-9.png') }}" alt="" class="brand__logo" />
+            <img src="{{ asset('assets/img/banner-10.png') }}" alt="" class="brand__logo" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer>
       <div class="section__container footer__container">
         <div class="footer__col">
@@ -251,10 +271,10 @@
         <div class="footer__col">
           <h4>Үйлчилгээ</h4>
           <ul class="footer__links">
-            <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
-            <li><a href="{{ route('categories.index') }}">Ангилал</a></li>
-            <li><a href="{{ route('rentals.index') }}">Түрээс</a></li>
-            <li><a href="{{ route('bookings.index') }}">Захиалга</a></li>
+            <li><a href="#home">Нүүр</a></li>
+            <li><a href="#range">Машинууд</a></li>
+            <li><a href="#choose">Онцлог</a></li>
+            <li><a href="{{ route('login') }}">Нэвтрэх</a></li>
           </ul>
         </div>
         <div class="footer__col">

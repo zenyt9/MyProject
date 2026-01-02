@@ -29,7 +29,7 @@ class CustomerController extends Controller
         ]);
 
         Customer::create($validated);
-        return redirect()->route('customers.index')->with('success', 'Үйлчлүүлэгч амжилттай нэмэгдлээ');
+        return redirect()->route('admin.customers.index')->with('success', 'Үйлчлүүлэгч амжилттай нэмэгдлээ');
     }
 
     public function show(Customer $customer)
@@ -53,12 +53,12 @@ class CustomerController extends Controller
         ]);
 
         $customer->update($validated);
-        return redirect()->route('customers.index')->with('success', 'Үйлчлүүлэгч амжилттай шинэчлэгдлээ');
+        return redirect()->route('admin.customers.index')->with('success', 'Үйлчлүүлэгч амжилттай шинэчлэгдлээ');
     }
 
     public function destroy(Customer $customer)
     {
         $customer->delete();
-        return redirect()->route('customers.index')->with('success', 'Үйлчлүүлэгч амжилттай устгагдлаа');
+        return redirect()->route('admin.customers.index')->with('success', 'Үйлчлүүлэгч амжилттай устгагдлаа');
     }
 }

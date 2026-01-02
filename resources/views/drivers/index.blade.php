@@ -11,22 +11,25 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/">RENTAL</a>
+                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="ri-car-line" style="font-size: 1.8rem;"></i>
+                    <span>Premium Rental</span>
+                </a>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
                 <i class="ri-menu-line"></i>
             </div>
         </div>
         <ul class="nav__links" id="nav-links">
-            <li><a href="/">Нүүр</a></li>
-            <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
-            <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
-            <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
-            <li><a href="{{ route('rentals.index') }}">Түрээс</a></li>
-            <li><a href="{{ route('bookings.index') }}">Захиалга</a></li>
+            <li><a href="{{ route('admin.dashboard') }}">Админ самбар</a></li>
+            <li><a href="{{ route('admin.cars.index') }}">Машинууд</a></li>
+            <li><a href="{{ route('admin.customers.index') }}">Үйлчлүүлэгчид</a></li>
+            <li><a href="{{ route('admin.drivers.index') }}">Жолооч</a></li>
+            <li><a href="{{ route('admin.rentals.index') }}">Түрээс</a></li>
+            <li><a href="{{ route('admin.bookings.index') }}">Захиалга</a></li>
         </ul>
         <div class="nav__btn">
-            <a href="{{ route('drivers.create') }}" class="btn"><i class="ri-add-line"></i> Жолооч нэмэх</a>
+            <a href="{{ route('admin.drivers.create') }}" class="btn"><i class="ri-add-line"></i> Жолооч нэмэх</a>
         </div>
     </nav>
 
@@ -54,10 +57,10 @@
                         <td style="padding: 1rem; color: var(--text-light);">{{ $driver->email ?? '-' }}</td>
                         <td style="padding: 1rem; color: var(--text-dark);">{{ $driver->phone ?? '-' }}</td>
                         <td style="padding: 1rem; text-align: center;">
-                            <a href="{{ route('drivers.edit', $driver->id) }}" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: var(--primary-color);">
+                            <a href="{{ route('admin.drivers.edit', $driver->id) }}" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: var(--primary-color);">
                                 <i class="ri-edit-line"></i> Засах
                             </a>
-                            <form action="{{ route('drivers.destroy', $driver->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('admin.drivers.destroy', $driver->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: #dc3545; color: white;" onclick="return confirm('Устгах уу?')">

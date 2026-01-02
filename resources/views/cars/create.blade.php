@@ -11,22 +11,25 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/">RENTAL</a>
+                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="ri-car-line" style="font-size: 1.8rem;"></i>
+                    <span>Premium Rental</span>
+                </a>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
                 <i class="ri-menu-line"></i>
             </div>
         </div>
         <ul class="nav__links" id="nav-links">
-            <li><a href="/">Нүүр</a></li>
-            <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
-            <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
-            <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
-            <li><a href="{{ route('rentals.index') }}">Түрээс</a></li>
-            <li><a href="{{ route('bookings.index') }}">Захиалга</a></li>
+            <li><a href="{{ route('admin.dashboard') }}">Админ самбар</a></li>
+            <li><a href="{{ route('admin.cars.index') }}">Машинууд</a></li>
+            <li><a href="{{ route('admin.customers.index') }}">Үйлчлүүлэгчид</a></li>
+            <li><a href="{{ route('admin.drivers.index') }}">Жолооч</a></li>
+            <li><a href="{{ route('admin.rentals.index') }}">Түрээс</a></li>
+            <li><a href="{{ route('admin.bookings.index') }}">Захиалга</a></li>
         </ul>
         <div class="nav__btn">
-            <a href="{{ route('cars.index') }}" class="btn"><i class="ri-arrow-left-line"></i> Буцах</a>
+            <a href="{{ route('admin.cars.index') }}" class="btn"><i class="ri-arrow-left-line"></i> Буцах</a>
         </div>
     </nav>
 
@@ -34,7 +37,7 @@
         <h2 class="section__header" style="text-align: center; margin-bottom: 3rem;">ШИНЭ МАШИН НЭМЭХ</h2>
 
         <div style="max-width: 700px; margin: 0 auto; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 5px 5px 20px rgba(0,0,0,0.1);">
-            <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.cars.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 1.5rem;">
@@ -128,7 +131,7 @@
                 </div>
 
                 <div style="display: flex; gap: 1rem; justify-content: flex-end;">
-                    <a href="{{ route('cars.index') }}" class="btn" style="background-color: var(--text-light);">
+                    <a href="{{ route('admin.cars.index') }}" class="btn" style="background-color: var(--text-light);">
                         <i class="ri-close-line"></i> Цуцлах
                     </a>
                     <button type="submit" class="btn" style="background-color: var(--primary-color);">

@@ -2,7 +2,7 @@
 <html lang="mn">
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0;url={{ route('drivers.index') }}" />
+    <meta http-equiv="refresh" content="0;url={{ route('admin.drivers.index') }}" />
     <title>Буцах...</title>
 </head>
 <body>

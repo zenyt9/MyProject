@@ -37,7 +37,7 @@ class CarController extends Controller
         ]);
 
         Car::create($validated);
-        return redirect()->route('cars.index')->with('success', 'Машин амжилттай нэмэгдлээ');
+        return redirect()->route('admin.cars.index')->with('success', 'Машин амжилттай нэмэгдлээ');
     }
 
     public function show(Car $car)
@@ -68,12 +68,20 @@ class CarController extends Controller
         ]);
 
         $car->update($validated);
-        return redirect()->route('cars.index')->with('success', 'Машин амжилттай шинэчлэгдлээ');
+        return redirect()->route('admin.cars.index')->with('success', 'Машин амжилттай шинэчлэгдлээ');
     }
 
     public function destroy(Car $car)
     {
         $car->delete();
-        return redirect()->route('cars.index')->with('success', 'Машин амжилттай устгагдлаа');
+        return redirect()->route('admin.cars.index')->with('success', 'Машин амжилттай устгагдлаа');
+    }
+
+    // User methods
+    public function userIndex()
+    {
+        $cars = Car::with('category')->where('status', 'available')->get();
+        $categories = CarCategory::all();
+        return view('user.cars.index', compact('cars', 'categories'));
     }
 }

@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Захиалга - Premium Car Rental</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/css/rental-template.css')}}" />
-    <div style="color:cyan"><title>Захиалга - Premium Car Rental </title></div>
-    <img src=" " alt="">
-
 </head>
 <body>
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/">RENTAL</a>
+                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="ri-car-line" style="font-size: 1.8rem;"></i>
+                    <span>Premium Rental</span>
+                </a>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
                 <i class="ri-menu-line"></i>
             </div>
         </div>
         <ul class="nav__links" id="nav-links">
-            <li><a href="/">Нүүр</a></li>
-            <li><a href="{{ route('cars.index') }}">Машинууд</a></li>
-            <li><a href="{{ route('customers.index') }}">Үйлчлүүлэгчид</a></li>
-            <li><a href="{{ route('drivers.index') }}">Жолооч</a></li>
-            <li><a href="{{ route('rentals.index') }}">Түрээс</a></li>
-            <li><a href="{{ route('bookings.index') }}">Захиалга</a></li>
+            <li><a href="{{ route('admin.dashboard') }}">Админ самбар</a></li>
+            <li><a href="{{ route('admin.cars.index') }}">Машинууд</a></li>
+            <li><a href="{{ route('admin.customers.index') }}">Үйлчлүүлэгчид</a></li>
+            <li><a href="{{ route('admin.drivers.index') }}">Жолооч</a></li>
+            <li><a href="{{ route('admin.rentals.index') }}">Түрээс</a></li>
+            <li><a href="{{ route('admin.bookings.index') }}">Захиалга</a></li>
         </ul>
         <div class="nav__btn">
-            <a href="{{ route('bookings.create') }}" class="btn"><i class="ri-add-line"></i> Шинэ захиалга</a>
+            <a href="{{ route('admin.bookings.create') }}" class="btn"><i class="ri-add-line"></i> Шинэ захиалга</a>
         </div>
     </nav>
 
@@ -74,10 +75,10 @@
                             @endif
                         </td>
                         <td style="padding: 1rem; text-align: center;">
-                            <a href="{{ route('bookings.edit', $booking) }}" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: var(--primary-color);">
+                            <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: var(--primary-color);">
                                 <i class="ri-edit-line"></i> Засах
                             </a>
-                            <form action="{{ route('bookings.destroy', $booking) }}" method="POST" style="display:inline;" onsubmit="return confirm('Та энэ захиалгыг устгахдаа итгэлтэй байна уу?')">
+                            <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST" style="display:inline;" onsubmit="return confirm('Та энэ захиалгыг устгахдаа итгэлтэй байна уу?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: #dc3545; color: white;">
@@ -102,7 +103,7 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
     <script src="{{asset('assets/js/rental-template.js')}}"></script>
 </body>
 </html>

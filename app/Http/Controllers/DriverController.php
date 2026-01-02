@@ -29,7 +29,7 @@ class DriverController extends Controller
         ]);
 
         Driver::create($validated);
-        return redirect()->route('drivers.index')->with('success', 'Жолооч амжилттай нэмэгдлээ');
+        return redirect()->route('admin.drivers.index')->with('success', 'Жолооч амжилттай нэмэгдлээ');
     }
 
     public function show(Driver $driver)
@@ -53,12 +53,12 @@ class DriverController extends Controller
         ]);
 
         $driver->update($validated);
-        return redirect()->route('drivers.index')->with('success', 'Жолооч амжилттай шинэчлэгдлээ');
+        return redirect()->route('admin.drivers.index')->with('success', 'Жолооч амжилттай шинэчлэгдлээ');
     }
 
     public function destroy(Driver $driver)
     {
         $driver->delete();
-        return redirect()->route('drivers.index')->with('success', 'Жолооч амжилттай устгагдлаа');
+        return redirect()->route('admin.drivers.index')->with('success', 'Жолооч амжилттай устгагдлаа');
     }
 }

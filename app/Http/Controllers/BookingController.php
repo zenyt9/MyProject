@@ -35,7 +35,7 @@ class BookingController extends Controller
         ]);
 
         Booking::create($validated);
-        return redirect()->route('bookings.index')->with('success', 'Захиалга амжилттай нэмэгдлээ');
+        return redirect()->route('admin.bookings.index')->with('success', 'Захиалга амжилттай нэмэгдлээ');
     }
 
     public function show(Booking $booking)
@@ -63,12 +63,12 @@ class BookingController extends Controller
         ]);
 
         $booking->update($validated);
-        return redirect()->route('bookings.index')->with('success', 'Захиалга амжилттай шинэчлэгдлээ');
+        return redirect()->route('admin.bookings.index')->with('success', 'Захиалга амжилттай шинэчлэгдлээ');
     }
 
     public function destroy(Booking $booking)
     {
         $booking->delete();
-        return redirect()->route('bookings.index')->with('success', 'Захиалга амжилттай устгагдлаа');
+        return redirect()->route('admin.bookings.index')->with('success', 'Захиалга амжилттай устгагдлаа');
     }
 }
