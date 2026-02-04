@@ -32,9 +32,16 @@ class CarController extends Controller
             'features' => 'nullable|string',
             'daily_rate' => 'required|numeric|min:0',
             'status' => 'required|in:available,rented,maintenance',
-            'image' => 'nullable|string|max:255',
             'category_id' => 'required|exists:car_categories,id'
         ]);
+
+        // Зураг хадгалах
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('storage/cars'), $imageName);
+            $validated['image'] = 'cars/' . $imageName;
+        }
 
         Car::create($validated);
         return redirect()->route('admin.cars.index')->with('success', 'Машин амжилттай нэмэгдлээ');
@@ -63,9 +70,21 @@ class CarController extends Controller
             'features' => 'nullable|string',
             'daily_rate' => 'required|numeric|min:0',
             'status' => 'required|in:available,rented,maintenance',
-            'image' => 'nullable|string|max:255',
             'category_id' => 'required|exists:car_categories,id'
         ]);
+
+        // Зураг шинэчлэх
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Хуучин зургийг устгах
+            if ($car->image && file_exists(public_path('storage/' . $car->image))) {
+                unlink(public_path('storage/' . $car->image));
+            }
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('storage/cars'), $imageName);
+            $validated['image'] = 'cars/' . $imageName;
+        }
 
         $car->update($validated);
         return redirect()->route('admin.cars.index')->with('success', 'Машин амжилттай шинэчлэгдлээ');
@@ -77,11 +96,29 @@ class CarController extends Controller
         return redirect()->route('admin.cars.index')->with('success', 'Машин амжилттай устгагдлаа');
     }
 
-    // User methods
-    public function userIndex()
+    /**
+     * Display available cars for users
+     */
+    public function userIndex(Request $request)
     {
-        $cars = Car::with('category')->where('status', 'available')->get();
-        $categories = CarCategory::all();
-        return view('user.cars.index', compact('cars', 'categories'));
+        $query = Car::with('category')->where('status', 'available');
+
+        // Category filter
+        if ($request->has('category') && $request->category) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Optional: Add search functionality
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('brand', 'like', "%{$search}%")
+                  ->orWhere('model', 'like', "%{$search}%");
+            });
+        }
+
+        $cars = $query->orderBy('daily_rate', 'asc')->get();
+
+        return view('user.cars.index', compact('cars'));
     }
 }

@@ -11,7 +11,7 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                <a href="{{ route('home') }}" style="display: flex; align-items: center; gap: 0.5rem;">
                     <i class="ri-car-line" style="font-size: 1.8rem;"></i>
                     <span>Premium Rental</span>
                 </a>
@@ -23,13 +23,9 @@
         <ul class="nav__links" id="nav-links">
             <li><a href="{{ route('admin.dashboard') }}">Админ самбар</a></li>
             <li><a href="{{ route('admin.cars.index') }}">Машинууд</a></li>
-            <li><a href="{{ route('admin.customers.index') }}">Үйлчлүүлэгчид</a></li>
-            <li><a href="{{ route('admin.drivers.index') }}">Жолооч</a></li>
-            <li><a href="{{ route('admin.rentals.index') }}">Түрээс</a></li>
             <li><a href="{{ route('admin.bookings.index') }}">Захиалга</a></li>
         </ul>
         <div class="nav__btn">
-            <a href="{{ route('admin.bookings.create') }}" class="btn"><i class="ri-add-line"></i> Шинэ захиалга</a>
         </div>
     </nav>
 
@@ -67,24 +63,32 @@
                         <td style="padding: 1rem; color: var(--text-light);">{{ optional($booking->end_date)->format('Y-m-d') ?? '-' }}</td>
                         <td style="padding: 1rem;">
                             @if($booking->status == 'pending')
-                                <span style="padding: 0.4rem 0.8rem; background: #ffc107; color: #333; border-radius: 5px; font-size: 0.85rem;">Хүлээгдэж байна</span>
+                                <span style="padding: 0.4rem 0.8rem; background: #ffc107; color: #333; border-radius: 5px; font-size: 0.85rem; white-space: nowrap; display: inline-block;">Хүлээгдэж байна</span>
                             @elseif($booking->status == 'confirmed')
-                                <span style="padding: 0.4rem 0.8rem; background: #28a745; color: white; border-radius: 5px; font-size: 0.85rem;">Баталгаажсан</span>
+                                <span style="padding: 0.4rem 0.8rem; background: #28a745; color: white; border-radius: 5px; font-size: 0.85rem; white-space: nowrap; display: inline-block;">Баталгаажсан</span>
                             @else
-                                <span style="padding: 0.4rem 0.8rem; background: #dc3545; color: white; border-radius: 5px; font-size: 0.85rem;">Цуцлагдсан</span>
+                                <span style="padding: 0.4rem 0.8rem; background: #dc3545; color: white; border-radius: 5px; font-size: 0.85rem; white-space: nowrap; display: inline-block;">Цуцлагдсан</span>
                             @endif
                         </td>
                         <td style="padding: 1rem; text-align: center;">
-                            <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: var(--primary-color);">
-                                <i class="ri-edit-line"></i> Засах
-                            </a>
-                            <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST" style="display:inline;" onsubmit="return confirm('Та энэ захиалгыг устгахдаа итгэлтэй байна уу?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn" style="min-width: 80px; margin: 0 5px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: #dc3545; color: white;">
-                                    <i class="ri-delete-bin-line"></i> Устгах
-                                </button>
-                            </form>
+                            <div style="display: flex; gap: 0.5rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                                @if($booking->status == 'pending')
+                                    <form action="{{ route('admin.bookings.confirm', $booking) }}" method="POST" style="margin: 0;">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn" style="min-width: 80px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: #28a745; color: white; border: none; cursor: pointer;">
+                                            <i class="ri-checkbox-circle-line"></i> Батлах
+                                        </button>
+                                    </form>
+                                @endif
+                                <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Та энэ захиалгыг устгахдаа итгэлтэй байна уу?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn" style="min-width: 80px; font-size: 0.85rem; padding: 0.5rem 1rem; background-color: #dc3545; color: white; border: none; cursor: pointer;">
+                                        <i class="ri-delete-bin-line"></i> Устгах
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @empty

@@ -154,7 +154,7 @@
             <div class="auth-footer">
                 Бүртгэлтэй юу? <a href="{{ route('login') }}">Нэвтрэх</a>
                 <br><br>
-                <a href="{{ route('welcome') }}">← Нүүр хуудас руу буцах</a>
+                <a href="{{ route('home') }}">← Нүүр хуудас руу буцах</a>
             </div>
         </div>
     </div>

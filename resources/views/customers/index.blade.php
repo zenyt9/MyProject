@@ -11,7 +11,7 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                <a href="{{ route('home') }}" style="display: flex; align-items: center; gap: 0.5rem;">
                     <i class="ri-car-line" style="font-size: 1.8rem;"></i>
                     <span>Premium Rental</span>
                 </a>

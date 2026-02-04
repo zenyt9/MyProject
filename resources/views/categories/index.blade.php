@@ -11,7 +11,7 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                <a href="{{ route('home') }}" style="display: flex; align-items: center; gap: 0.5rem;">
                     <i class="ri-car-line" style="font-size: 1.8rem;"></i>
                     <span>Premium Rental</span>
                 </a>
@@ -23,9 +23,6 @@
         <ul class="nav__links" id="nav-links">
             <li><a href="{{ route('admin.dashboard') }}">Админ самбар</a></li>
             <li><a href="{{ route('admin.cars.index') }}">Машинууд</a></li>
-            <li><a href="{{ route('admin.customers.index') }}">Үйлчлүүлэгчид</a></li>
-            <li><a href="{{ route('admin.drivers.index') }}">Жолооч</a></li>
-            <li><a href="{{ route('admin.rentals.index') }}">Түрээс</a></li>
             <li><a href="{{ route('admin.bookings.index') }}">Захиалга</a></li>
         </ul>
         <div class="nav__btn">

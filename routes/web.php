@@ -11,8 +11,18 @@ use App\Http\Controllers\AuthController;
 
 // Public routes
 Route::get('/', function () {
+    // Хэрэв intro харсан бол шууд home руу
+    if (session()->has('intro_viewed')) {
+        return redirect()->route('home');
+    }
+    return view('intro');
+})->name('intro');
+
+Route::get('/home', function () {
+    // Intro үзсэн гэж тэмдэглэх
+    session()->put('intro_viewed', true);
     return view('welcome');
-})->name('welcome');
+})->name('home');
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -33,6 +43,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('customers', CustomerController::class);
     Route::resource('rentals', RentalController::class);
     Route::resource('bookings', BookingController::class);
+    Route::patch('/bookings/{booking}/confirm', [BookingController::class, 'confirm'])->name('bookings.confirm');
 });
 
 // User routes (protected by auth)
@@ -41,4 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cars', [CarController::class, 'userIndex'])->name('user.cars.index');
     Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('user.bookings');
     Route::post('/bookings', [BookingController::class, 'store'])->name('user.bookings.store');
+
+    // User profile
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('user.profile');
+    Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('user.profile.update');
 });

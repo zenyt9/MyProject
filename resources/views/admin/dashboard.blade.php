@@ -122,30 +122,6 @@
                 </div>
             </a>
 
-            <a href="{{ route('admin.customers.index') }}" style="text-decoration: none; color: inherit;">
-                <div class="dashboard-card">
-                    <i class="ri-user-3-line"></i>
-                    <h3>Үйлчлүүлэгчид</h3>
-                    <p>Харилцагчдыг удирдах</p>
-                </div>
-            </a>
-
-            <a href="{{ route('admin.drivers.index') }}" style="text-decoration: none; color: inherit;">
-                <div class="dashboard-card">
-                    <i class="ri-steering-2-line"></i>
-                    <h3>Жолооч нар</h3>
-                    <p>Жолооч удирдах</p>
-                </div>
-            </a>
-
-            <a href="{{ route('admin.rentals.index') }}" style="text-decoration: none; color: inherit;">
-                <div class="dashboard-card">
-                    <i class="ri-file-list-3-line"></i>
-                    <h3>Түрээс</h3>
-                    <p>Түрээсийн бүртгэл</p>
-                </div>
-            </a>
-
             <a href="{{ route('admin.bookings.index') }}" style="text-decoration: none; color: inherit;">
                 <div class="dashboard-card">
                     <i class="ri-calendar-check-line"></i>

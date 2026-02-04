@@ -13,7 +13,7 @@
       <nav>
         <div class="nav__header">
           <div class="nav__logo">
-            <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+            <a href="{{ route('home') }}" style="display: flex; align-items: center; gap: 0.5rem;">
               <i class="ri-car-line" style="font-size: 1.8rem;"></i>
               <span>Premium Rental</span>
             </a>
@@ -24,16 +24,15 @@
         </div>
         <ul class="nav__links" id="nav-links">
           <li><a href="#home">Нүүр</a></li>
-          <li><a href="#range">Машинууд</a></li>
-          <li><a href="#choose">Онцлог</a></li>
-          <li><a href="#download">Холбоо барих</a></li>
+          <li><a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}">Машинууд</a></li>
         </ul>
         <div class="nav__btn">
           @auth
             @if(auth()->user()->role === 'admin')
               <a href="{{ route('admin.dashboard') }}" class="btn"><i class="ri-dashboard-line"></i> Админ самбар</a>
             @else
-              <a href="{{ route('user.cars.index') }}" class="btn"><i class="ri-car-line"></i> Машин түрээслэх</a>
+              <a href="{{ route('user.profile') }}" class="btn"><i class="ri-user-line"></i> Профайл</a>
+              <a href="{{ route('user.cars.index') }}" class="btn" style="margin-left: 1rem;"><i class="ri-car-line"></i> Машинууд</a>
             @endif
             <form action="{{ route('logout') }}" method="POST" style="display: inline; margin-left: 1rem;">
               @csrf
@@ -46,24 +45,7 @@
         </div>
       </nav>
       <div class="header__container" id="home">
-        <h1>PREMIUM CAR RENTAL</h1>
-        <form action="/">
-          <div class="input__group">
-            <label for="location">Авах & Буцаах байршил</label>
-            <input type="text" name="location" id="location" placeholder="Улаанбаатар, Монгол" />
-          </div>
-          <div class="input__group">
-            <label for="start">Эхлэх</label>
-            <input type="text" name="start" id="start" placeholder="2024/01/01, 10:00" />
-          </div>
-          <div class="input__group">
-            <label for="stop">Дуусах</label>
-            <input type="text" name="stop" id="stop" placeholder="2024/01/05, 18:00" />
-          </div>
-          <button class="btn">
-            <i class="ri-search-line"></i>
-          </button>
-        </form>
+        <h1 style="color: cyan;">PREMIUM CAR RENTAL</h1>
       </div>
       <a href="#about" class="scroll__down">
         <i class="ri-arrow-down-line"></i>
@@ -77,28 +59,28 @@
           <img src="{{ asset('assets/img/gr86.jpg') }}" alt="sedan" />
           <div class="range__details">
             <h4>SPORT</h4>
-            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
+            <a href="{{ auth()->check() ? route('user.cars.index', ['category' => 2]) : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
         <div class="range__card">
           <img src="{{ asset('assets/img/suv_jeep.jpg') }}" alt="suv" />
           <div class="range__details">
             <h4>SUV</h4>
-            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
+            <a href="{{ auth()->check() ? route('user.cars.index', ['category' => 1]) : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
         <div class="range__card">
-          <img src="{{ asset('assets/img/offroad.webp') }}" alt="offroad" />
+          <img src="{{ asset('assets/img/sedan.jpg') }}" alt="sedan" />
           <div class="range__details">
-            <h4>OFFROAD</h4>
-            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
+            <h4>SEDAN</h4>
+            <a href="{{ auth()->check() ? route('user.cars.index', ['category' => 3]) : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
         <div class="range__card">
-          <img src="{{ asset('assets/img/electric.jpg') }}" alt="electric" />
+          <img src="{{ asset('assets/img/luxury.jpg') }}" alt="luxury" />
           <div class="range__details">
-            <h4>ELECTRIC</h4>
-            <a href="{{ auth()->check() ? route('user.cars.index') : route('login') }}"><i class="ri-arrow-right-line"></i></a>
+            <h4>LUXURY</h4>
+            <a href="{{ auth()->check() ? route('user.cars.index', ['category' => 4]) : route('login') }}"><i class="ri-arrow-right-line"></i></a>
           </div>
         </div>
       </div>
@@ -156,7 +138,7 @@
       </form>
     </section>
 
-    <section class="section__container story__container">
+    <section class="section__container story__container" id="story">
       <h2 class="section__header">МАНАЙ ҮЙЛЧИЛГЭЭ</h2>
       <div class="story__grid">
         <div class="story__card">

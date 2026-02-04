@@ -103,31 +103,50 @@
             background: #28a745;
             color: white;
         }
-        .filter-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .no-cars {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
         }
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+        .no-cars i {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            display: block;
+            opacity: 0.3;
+        }
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
         }
     </style>
 </head>
 <body>
     <div class="user-header">
         <div class="user-nav">
-            <a href="/" class="user-logo">
+            <a href="{{ route('home') }}" class="user-logo">
                 <i class="ri-car-line"></i>
                 <span>Premium Rental</span>
             </a>
             <div class="user-menu">
-                <a href="/"><i class="ri-home-line"></i> Нүүр</a>
+                <a href="{{ route('home') }}"><i class="ri-home-line"></i> Нүүр</a>
                 <a href="{{ route('user.cars.index') }}"><i class="ri-car-line"></i> Машинууд</a>
-                <a href="{{ route('user.bookings') }}"><i class="ri-book-line"></i> Миний захиалга</a>
+                <a href="{{ route('user.profile') }}"><i class="ri-user-line"></i> Профайл</a>
                 <span style="color: white;"><i class="ri-user-line"></i> {{ auth()->user()->name }}</span>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
@@ -140,21 +159,19 @@
     </div>
 
     <div class="section__container">
-        <h1 class="section__header" style="text-align: center; margin-bottom: 2rem;">БОЛОМЖТОЙ МАШИНУУД</h1>
+        <h1 class="section__header" style="text-align: center; margin-bottom: 3rem;">БОЛОМЖТОЙ МАШИНУУД</h1>
 
-        <div class="filter-section">
-            <h3 style="margin-bottom: 1rem; color: var(--text-dark);">Ангиллаар шүүх</h3>
-            <div class="filter-grid">
-                <a href="{{ route('user.cars.index') }}" class="btn" style="text-align: center;">
-                    Бүгд
-                </a>
-                @foreach($categories as $category)
-                    <a href="?category={{ $category->id }}" class="btn" style="text-align: center; background: var(--primary-color-light);">
-                        {{ $category->name }}
-                    </a>
-                @endforeach
+        @if(session('success'))
+            <div id="successNotification" style="padding: 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; margin-bottom: 2rem; box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3); animation: slideInDown 0.5s ease-out;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="ri-checkbox-circle-fill" style="font-size: 2rem;"></i>
+                    <div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.25rem;">{{ session('success') }}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">Админ тантай удахгүй холбогдох болно.</div>
+                    </div>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="car-grid">
             @forelse($cars as $car)
@@ -174,31 +191,6 @@
                             <i class="ri-checkbox-circle-line"></i> Боломжтой
                         </span>
 
-                        <div class="car-details">
-                            <div class="car-detail">
-                                <i class="ri-calendar-line"></i>
-                                <span>{{ $car->year }}</span>
-                            </div>
-                            @if($car->seats)
-                                <div class="car-detail">
-                                    <i class="ri-group-line"></i>
-                                    <span>{{ $car->seats }} суудал</span>
-                                </div>
-                            @endif
-                            @if($car->color)
-                                <div class="car-detail">
-                                    <i class="ri-palette-line"></i>
-                                    <span>{{ $car->color }}</span>
-                                </div>
-                            @endif
-                            @if($car->category)
-                                <div class="car-detail">
-                                    <i class="ri-price-tag-3-line"></i>
-                                    <span>{{ $car->category->name }}</span>
-                                </div>
-                            @endif
-                        </div>
-
                         @if($car->features)
                             <div style="margin: 1rem 0; color: var(--text-light); font-size: 0.9rem;">
                                 <i class="ri-star-line"></i> {{ $car->features }}
@@ -209,15 +201,16 @@
                             {{ number_format($car->daily_rate) }}₮ / өдөр
                         </div>
 
-                        <a href="{{ route('login') }}" class="btn" style="width: 100%; text-align: center; background: var(--primary-color);">
+                        <button onclick="openBookingModal({{ $car->id }}, '{{ $car->brand }} {{ $car->model }}', {{ $car->daily_rate }})"
+                                class="btn" style="width: 100%; text-align: center; background: var(--primary-color); border: none; cursor: pointer;">
                             <i class="ri-calendar-check-line"></i> Захиалах
-                        </a>
+                        </button>
                     </div>
                 </div>
             @empty
-                <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-light);">
-                    <i class="ri-car-line" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
-                    <p style="font-size: 1.2rem;">Одоогоор боломжтой машин байхгүй байна</p>
+                <div class="no-cars">
+                    <i class="ri-car-line"></i>
+                    <p style="font-size: 1.2rem; font-weight: 500;">Одоогоор боломжтой машин байхгүй байна</p>
                 </div>
             @endforelse
         </div>
@@ -228,5 +221,111 @@
             Copyright © 2024 Premium Car Rental. Бүх эрх хуулиар хамгаалагдсан.
         </div>
     </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; border-radius: 10px; padding: 2rem; width: 90%; max-width: 500px; position: relative;">
+            <button onclick="closeBookingModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-light);">
+                <i class="ri-close-line"></i>
+            </button>
+
+            <h2 style="margin-bottom: 1.5rem; color: var(--text-dark);">
+                <i class="ri-calendar-check-line"></i> Машин захиалах
+            </h2>
+
+            <form action="{{ route('user.bookings.store') }}" method="POST" id="bookingForm">
+                @csrf
+                <input type="hidden" name="car_id" id="modal_car_id">
+
+                <div style="margin-bottom: 1rem; padding: 1rem; background: var(--extra-light); border-radius: 5px;">
+                    <div id="modal_car_name" style="font-size: 1.1rem; font-weight: 600; color: var(--text-dark);"></div>
+                    <div id="modal_car_price" style="color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;"></div>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                        <i class="ri-phone-line"></i> Утасны дугаар
+                    </label>
+                    <input type="tel" name="phone" required
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                           placeholder="99999999"
+                           pattern="[0-9]{8}"
+                           maxlength="8">
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                        <i class="ri-mail-line"></i> Имэйл хаяг
+                    </label>
+                    <input type="email" name="email" required
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                           placeholder="example@gmail.com">
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                        <i class="ri-calendar-line"></i> Эхлэх огноо
+                    </label>
+                    <input type="date" name="start_date" required
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                           min="{{ date('Y-m-d') }}">
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                        <i class="ri-calendar-line"></i> Дуусах огноо
+                    </label>
+                    <input type="date" name="end_date" required
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;"
+                           min="{{ date('Y-m-d') }}">
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                        <i class="ri-message-3-line"></i> Нэмэлт мэдээлэл (заавал биш)
+                    </label>
+                    <textarea name="notes" rows="3"
+                              style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; resize: vertical;"
+                              placeholder="Хэрэв та нэмэлт мэдээлэл өгөхийг хүсвэл энд бичнэ үү..."></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; background: var(--primary-color); border: none; padding: 0.75rem; font-size: 1rem;">
+                    <i class="ri-send-plane-fill"></i> Захиалга илгээх
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openBookingModal(carId, carName, dailyRate) {
+            document.getElementById('modal_car_id').value = carId;
+            document.getElementById('modal_car_name').textContent = carName;
+            document.getElementById('modal_car_price').textContent = new Intl.NumberFormat('mn-MN').format(dailyRate) + '₮ / өдөр';
+            document.getElementById('bookingModal').style.display = 'flex';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.getElementById('bookingForm').reset();
+        }
+
+        // Close modal on outside click
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+
+        // Auto-hide success notification after 5 seconds
+        const notification = document.getElementById('successNotification');
+        if (notification) {
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.5s ease-out forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 5000);
+        }
+    </script>
 </body>
 </html>

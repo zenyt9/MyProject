@@ -141,7 +141,7 @@
             <div class="auth-footer">
                 Бүртгэлгүй юу? <a href="{{ route('register') }}">Бүртгүүлэх</a>
                 <br><br>
-                <a href="{{ route('welcome') }}">← Нүүр хуудас руу буцах</a>
+                <a href="{{ route('home') }}">← Нүүр хуудас руу буцах</a>
             </div>
         </div>
     </div>

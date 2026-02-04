@@ -11,7 +11,7 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="/" style="display: flex; align-items: center; gap: 0.5rem;">
+                <a href="{{ route('home') }}" style="display: flex; align-items: center; gap: 0.5rem;">
                     <i class="ri-car-line" style="font-size: 1.8rem;"></i>
                     <span>Premium Rental</span>
                 </a>
@@ -37,6 +37,18 @@
         <h2 class="section__header" style="text-align: center; margin-bottom: 3rem;">ШИНЭ МАШИН НЭМЭХ</h2>
 
         <div style="max-width: 700px; margin: 0 auto; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 5px 5px 20px rgba(0,0,0,0.1);">
+
+            @if ($errors->any())
+                <div style="background: #fee2e2; color: #991b1b; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                    <strong>Алдаа:</strong>
+                    <ul style="margin: 0.5rem 0 0 1.5rem;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('admin.cars.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -121,6 +133,23 @@
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">
+                    <label for="image" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Зураг</label>
+                    <input type="file" name="image" id="image" accept="image/*"
+                           style="width: 100%; padding: 0.75rem; border: 2px solid var(--extra-light); border-radius: 0.5rem; font-size: 1rem;"
+                           onchange="previewImage(event)">
+                    <div id="imagePreview" style="margin-top: 1rem; text-align: center;"></div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="features" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Онцлог</label>
+                    <textarea name="features" id="features" rows="3"
+                           style="width: 100%; padding: 0.75rem; border: 2px solid var(--extra-light); border-radius: 0.5rem; font-size: 1rem; resize: vertical;"
+                           placeholder="Жишээ: AWD, GPS навигаци, Арын камер"
+                           onfocus="this.style.borderColor='var(--primary-color)'"
+                           onblur="this.style.borderColor='var(--extra-light)'"></textarea>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
                     <label for="status" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Статус</label>
                     <select name="status" id="status"
                             style="width: 100%; padding: 0.75rem; border: 2px solid var(--extra-light); border-radius: 0.5rem; font-size: 1rem;" required>
@@ -150,5 +179,21 @@
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="{{asset('assets/js/rental-template.js')}}"></script>
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('imagePreview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" style="max-width: 300px; max-height: 200px; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+    </script>
 </body>
 </html>
