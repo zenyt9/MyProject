@@ -6,6 +6,7 @@ cmds = [
   "npm install",
   "npm run build",
   "composer install --no-dev",
+  "php artisan config:clear",
   "php artisan key:generate --force",
   "php artisan config:cache",
   "php artisan route:cache",
